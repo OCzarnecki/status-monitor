@@ -4,15 +4,15 @@ use std::collections::HashMap;
 
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub struct Config {
-    bot_token: String,
-    chat_id: String,
-    services: HashMap<String, Service>
+    pub bot_token: String,
+    pub chat_id: String,
+    pub services: HashMap<String, Service>
 }
 
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub struct Service {
-    name: String,
-    interval: u32
+    pub name: String,
+    pub interval: u32
 }
 
 impl Config {
@@ -27,13 +27,5 @@ impl Config {
             },
             Err(error) => return Err(error.to_string())
         }
-    }
-
-    pub fn bot_token(&self) -> String {
-        "1273678131:AAF0Mp-NHk2EEwxDqnX9-2VLOMQdlPS_NfQ".to_string()
-    }
-
-    pub fn chat_id(&self) -> String {
-        "292570719".to_string()
     }
 }

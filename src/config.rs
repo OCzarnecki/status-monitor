@@ -1,9 +1,18 @@
 extern crate serde_yaml;
 
+use std::collections::HashMap;
+
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub struct Config {
     bot_token: String,
-    chat_id: String
+    chat_id: String,
+    services: HashMap<String, Service>
+}
+
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
+pub struct Service {
+    name: String,
+    interval: u32
 }
 
 impl Config {

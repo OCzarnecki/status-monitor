@@ -7,3 +7,15 @@ bot_token: 1234567890:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 # The id of the chat to receive reports. How you obtain this, is described in
 # the readme.
 chat_id: 999999999
+
+# List of services to expect check-ins from. All parameters are mandatory.
+services:
+  # Handle for use in URLs
+  service1:
+    # Pretty name of the service, for display
+    name: Service 1
+    # How many minutes a service can go without checking in before an error is raised
+    interval: 1440
+  service2:
+    handle: Service 2
+    interval: 5

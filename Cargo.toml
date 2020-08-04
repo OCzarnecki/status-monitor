@@ -1,0 +1,13 @@
+[package]
+name = "status-monitor"
+version = "0.1.0"
+authors = ["Olaf Czarnecki <olaf.czarnecki@outlook.com>"]
+edition = "2018"
+
+[dependencies]
+reqwest = { version = "0.10", features = ["json"] }
+tokio = { version = "0.2", features = ["full"] }
+yaml-rust = "0.4"
+serde = "1.0"
+serde_derive = "1.0"
+serde_yaml = "0.8"

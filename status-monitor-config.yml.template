@@ -1,0 +1,9 @@
+# Configuration file template for the status monitor. Populate the fields as
+# described, then rename this file to status-monitor-config.yml.
+
+# The token you get after you ask @BotFather to create a new bot for you
+bot_token: 1234567890:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+# The id of the chat to receive reports. How you obtain this, is described in
+# the readme.
+chat_id: 999999999

@@ -1,6 +1,6 @@
 use crate::config::Config;
 
-pub async fn send_message(cfg: Config, msg: String) {
+pub async fn send_message(cfg: Config, msg: &str) {
     let resp = reqwest::get(
         &format!("https://api.telegram.org/bot{}/sendMessage?chat_id={}&text={}",
             cfg.bot_token,

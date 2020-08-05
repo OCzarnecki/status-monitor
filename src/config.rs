@@ -9,7 +9,7 @@ pub struct Config {
     pub services: HashMap<String, Service>
 }
 
-#[derive(Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, PartialEq, Serialize, Deserialize, Clone)]
 pub struct Service {
     pub name: String,
     pub interval: u32

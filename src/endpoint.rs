@@ -1,8 +1,6 @@
 use actix_web::{get, web, App, HttpResponse, HttpServer, Responder};
 use serde::Deserialize;
 
-use std::sync::Arc;
-
 use crate::config::Config;
 
 #[derive(Deserialize)]
@@ -17,8 +15,8 @@ struct Reply {
 }
 
 #[get("/{text}/checkin")]
-async fn index(info: web::Path<Params>, state: web::Data<Arc<Config>>) -> impl Responder {
-    crate::telegram_api::send_message(&state, &info.text).await; // TODO this should not block
+async fn index(info: web::Path<Params>, state: web::Data<Config>) -> impl Responder {
+    crate::telegram_api::fire_message(state.into_inner(), &info.text).await;
     HttpResponse::Ok()
         .json(Reply {
             ok: true,
@@ -26,11 +24,11 @@ async fn index(info: web::Path<Params>, state: web::Data<Arc<Config>>) -> impl R
         })
 }
 
-pub async fn spawn_server(cfg: Arc<Config>) -> std::io::Result<()> {
+pub async fn spawn_server(cfg: web::Data<Config>) -> std::io::Result<()> {
     HttpServer::new(move || {
-        let local_cfg = Arc::clone(&cfg);
+        let local_cfg = cfg.clone();
         App::new()
-            .data(local_cfg)
+            .app_data(local_cfg)
             .service(index)
     })
     .bind("127.0.0.1:8080")?

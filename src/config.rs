@@ -17,15 +17,9 @@ pub struct Service {
 
 impl Config {
     pub fn load() -> Result<Config, String> {
-        match std::fs::File::open("status-monitor-config.yml") {
-            Ok(file) => {
-                let parse_result: serde_yaml::Result<Config> = serde_yaml::from_reader(file);
-                match parse_result {
-                    Ok(cfg) => return Ok(cfg),
-                    Err(error) => return Err(error.to_string())
-                }
-            },
-            Err(error) => return Err(error.to_string())
-        }
+        std::fs::File::open("status-monitor-config.yml")
+            .map_err(|e| format!("Could not open config file: {:?}", e))
+            .and_then(|f| serde_yaml::from_reader(f)
+                .map_err(|e| format!("Could not parse config file: {:?}", e)))
     }
 }

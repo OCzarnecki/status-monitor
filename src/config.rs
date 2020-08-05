@@ -18,8 +18,8 @@ pub struct Service {
 impl Config {
     pub fn load() -> Result<Config, String> {
         std::fs::File::open("status-monitor-config.yml")
-            .map_err(|e| format!("Could not open config file: {:?}", e))
+            .map_err(|e| format!("Could not open config file: {:#}", e))
             .and_then(|f| serde_yaml::from_reader(f)
-                .map_err(|e| format!("Could not parse config file: {:?}", e)))
+                .map_err(|e| format!("Could not parse config file: {:#}", e)))
     }
 }

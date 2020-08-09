@@ -8,12 +8,11 @@ use crate::telegram_api;
 
 pub async fn start_daemon(cfg_other: Arc<Config>, timeouts_other: Arc<Mutex<Timeouts>>) -> tokio::task::JoinHandle<()> {
     tokio::spawn(async move {
-        let mut interval = tokio::time::interval(Duration::from_secs(1));
+        let mut interval = tokio::time::interval(Duration::from_secs(60));
         let cfg = cfg_other.clone();
         let timeouts = timeouts_other.clone();
         loop {
             interval.tick().await;
-            println!("Checking service state");
 
             let failed: Vec<Service>;
             {

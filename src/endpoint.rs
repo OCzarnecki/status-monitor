@@ -24,7 +24,7 @@ struct ReplyErr {
 }
 
 #[get("/{handle}/checkin")]
-async fn index(info: web::Path<Params>,
+async fn checkin(info: web::Path<Params>,
                cfg: web::Data<Config>,
                timeouts: web::Data<Mutex<Timeouts>>) -> impl Responder {
     let handle = &info.handle;
@@ -53,6 +53,11 @@ async fn index(info: web::Path<Params>,
     }
 }
 
+#[get("/isup")]
+async fn isup() -> impl Responder {
+    HttpResponse::Ok()
+}
+
 pub async fn spawn_server(cfg: web::Data<Config>,
                           timeouts: web::Data<Mutex<Timeouts>>) -> std::io::Result<()> {
     HttpServer::new(move || {
@@ -61,7 +66,8 @@ pub async fn spawn_server(cfg: web::Data<Config>,
         App::new()
             .app_data(local_cfg)
             .app_data(local_timeouts)
-            .service(index)
+            .service(checkin)
+            .service(isup)
     })
     .bind("127.0.0.1:8080")?
     .run()

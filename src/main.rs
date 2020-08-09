@@ -3,6 +3,7 @@ extern crate serde_derive;
 
 mod config;
 mod controller;
+mod daily_report;
 mod endpoint;
 mod telegram_api;
 mod timeouts;
@@ -14,9 +15,12 @@ use crate::config::Config;
 use crate::timeouts::Timeouts;
 
 #[actix_rt::main]
-async fn main() -> () {
+async fn main() -> Result<(), std::io::Error> {
     let cfg_webdata = web::Data::new(Config::load().unwrap_or_else(|e| panic!("FATAL: {}", e)));
     let timeouts_webdata = web::Data::new(Mutex::new(Timeouts::from_config(cfg_webdata.clone().into_inner())));
+    daily_report::start_daemon(
+        cfg_webdata.clone().into_inner()
+    ).await;
     controller::start_daemon(
         cfg_webdata.clone().into_inner(),
         timeouts_webdata.clone().into_inner())
@@ -24,5 +28,5 @@ async fn main() -> () {
     endpoint::spawn_server(
         cfg_webdata.clone(),
         timeouts_webdata.clone())
-    .await;
+    .await
 }

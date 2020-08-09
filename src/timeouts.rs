@@ -47,7 +47,7 @@ impl Timeouts {
     pub fn get_failed(&mut self) -> Vec<Service> {
         let now = SystemTime::now();
         let mut result = Vec::new();
-        for (handle, info) in &mut self.timeouts {
+        for (_, info) in &mut self.timeouts {
             if info.next_timeout < now {
                 match info.state {
                     ServiceState::Running => {

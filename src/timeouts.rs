@@ -14,7 +14,7 @@ impl Timeouts {
         for (handle, service) in &cfg.services {
             timeouts.insert(handle.to_string(), ServiceInfo {
                 next_timeout: next_timeout(service),
-                state: ServiceState::Failed,
+                state: ServiceState::Running,
                 service: service.clone(),
             });
         }
@@ -42,6 +42,23 @@ impl Timeouts {
 
     pub fn interval(&self, handle: &str) -> Option<u32> {
         self.timeouts.get(handle).map(|info| info.service.interval)
+    }
+
+    pub fn get_failed(&mut self) -> Vec<Service> {
+        let now = SystemTime::now();
+        let mut result = Vec::new();
+        for (handle, info) in &mut self.timeouts {
+            if info.next_timeout < now {
+                match info.state {
+                    ServiceState::Running => {
+                        result.push(info.service.clone());
+                        info.state = ServiceState::Failed;
+                    }
+                    ServiceState::Failed => ()
+                }
+            }
+        }
+        result
     }
 }
 

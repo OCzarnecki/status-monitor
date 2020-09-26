@@ -8,6 +8,9 @@ bot_token: 1234567890:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 # the readme.
 chat_id: 999999999
 
+# The port at which other services should check in
+port: 8080
+
 # List of services to expect check-ins from. All parameters are mandatory.
 services:
   # Handle for use in URLs

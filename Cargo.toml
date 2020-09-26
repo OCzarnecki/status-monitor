@@ -1,5 +1,9 @@
 [package]
 name = "status-monitor"
+description = "keeps track of services that report their alive status via REST"
+homepage = "https://github.com/OCzarnecki/status-monitor.git"
+repository = "https://github.com/OCzarnecki/status-monitor.git"
+license = "MIT"
 version = "0.1.0"
 authors = ["Olaf Czarnecki <olaf.czarnecki@outlook.com>"]
 edition = "2018"

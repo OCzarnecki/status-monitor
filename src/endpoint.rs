@@ -60,6 +60,7 @@ async fn isup() -> impl Responder {
 
 pub async fn spawn_server(cfg: web::Data<Config>,
                           timeouts: web::Data<Mutex<Timeouts>>) -> std::io::Result<()> {
+    let port = cfg.port;
     HttpServer::new(move || {
         let local_cfg = cfg.clone();
         let local_timeouts = timeouts.clone();
@@ -69,7 +70,7 @@ pub async fn spawn_server(cfg: web::Data<Config>,
             .service(checkin)
             .service(isup)
     })
-    .bind("127.0.0.1:8080")?
+    .bind(format!("127.0.0.1:{}", port))?
     .run()
     .await
 }

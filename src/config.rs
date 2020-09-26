@@ -6,6 +6,7 @@ use std::collections::HashMap;
 pub struct Config {
     pub bot_token: String,
     pub chat_id: String,
+    pub port: u16,
     pub services: HashMap<String, Service>
 }
 
